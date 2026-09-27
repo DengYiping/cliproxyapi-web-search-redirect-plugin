@@ -1,0 +1,28 @@
+# Merge into your CLIProxyAPI config (e.g. /opt/homebrew/etc/cliproxyapi.conf).
+plugins:
+  enabled: true
+  dir: "~/.cli-proxy-api/plugins"
+  configs:
+    web-search-redirect:
+      enabled: true
+      priority: 10
+
+      # Case-insensitive wildcard patterns of models whose provider has no hosted web
+      # search (OpenAI-compatible OSS vendors). Only "*" is special. Empty matches nothing.
+      models:
+        - "kimi-*"
+        - "glm-*"
+        - "deepseek-*"
+        - "qwen*"
+      # OpenAI model that runs each search with the hosted web_search tool.
+      search_model: "gpt-5.5"
+      # Built-in provider forced for search requests. "codex" covers both Codex OAuth
+      # accounts and codex-api-key entries (e.g. an OpenAI API key with base-url
+      # https://api.openai.com/v1). Empty lets the host pick any provider for search_model.
+      search_provider: "codex"
+      # Reasoning effort for search requests. Empty keeps the provider default.
+      search_reasoning_effort: "low"
+      # Maximum searches per client request. Further calls get a "limit reached" reply.
+      max_searches: 5
+      # Log each redirect and search through the host logger.
+      debug_log: false
